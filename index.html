@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Fiscaliza RJ - Deputados Federais</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { font-family: Arial, sans-serif; background: #f4f4f2; margin: 0; padding: 20px; color: #222; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  p.sub { color: #666; margin-top: 0; margin-bottom: 20px; font-size: 14px; }
+  .filtros { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .filtros input, .filtros select { padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+  .filtros input { flex: 2; min-width: 200px; }
+  .filtros select { flex: 1; min-width: 150px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .card { background: white; border-radius: 10px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
+  .card img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; }
+  .card h3 { font-size: 15px; margin: 6px 0 2px; }
+  .card p { font-size: 13px; color: #666; margin: 0; }
+  .atualizado { font-size: 12px; color: #999; margin-top: 30px; text-align: center; }
+</style>
+</head>
+<body>
+
+<h1>Fiscaliza RJ</h1>
+<p class="sub">Dados oficiais dos deputados federais do Rio de Janeiro, direto da API da Câmara dos Deputados.</p>
+
+<div class="filtros">
+  <input type="text" id="busca" placeholder="Buscar por nome...">
+  <select id="filtroPartido">
+    <option value="todos">Todos os partidos</option>
+  </select>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<p class="atualizado" id="atualizadoEm"></p>
+
+<script>
+let deputados = [];
+
+fetch('data/deputados.json')
+  .then(res => res.json())
+  .then(json => {
+    deputados = json.dados;
+    montarFiltroPartidos();
+    renderizar();
+    document.getElementById('atualizadoEm').textContent =
+      'Dados atualizados em: ' + new Date(json.atualizadoEm).toLocaleString('pt-BR');
+  })
+  .catch(() => {
+    document.getElementById('grid').innerHTML =
+      '<p>Ainda não há dados carregados. O robô de atualização precisa rodar pelo menos uma vez.</p>';
+  });
+
+function montarFiltroPartidos() {
+  const partidos = [...new Set(deputados.map(d => d.siglaPartido))].sort();
+  const select = document.getElementById('filtroPartido');
+  partidos.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p;
+    opt.textContent = p;
+    select.appendChild(opt);
+  });
+}
+
+function renderizar() {
+  const busca = document.getElementById('busca').value.toLowerCase();
+  const partido = document.getElementById('filtroPartido').value;
+
+  const filtrados = deputados.filter(d =>
+    d.nome.toLowerCase().includes(busca) &&
+    (partido === 'todos' || d.siglaPartido === partido)
+  );
+
+  document.getElementById('grid').innerHTML = filtrados.map(d => `
+    <div class="card">
+      <img src="${d.urlFoto}" alt="${d.nome}">
+      <h3>${d.nome}</h3>
+      <p>${d.siglaPartido} · RJ</p>
+    </div>
+  `).join('');
+}
+
+document.getElementById('busca').addEventListener('input', renderizar);
+document.getElementById('filtroPartido').addEventListener('change', renderizar);
+</script>
+
+</body>
+</html>
