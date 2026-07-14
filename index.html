@@ -1,56 +1,111 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Fiscaliza RJ - Deputados Federais</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  body { font-family: Arial, sans-serif; background: #f4f4f2; margin: 0; padding: 20px; color: #222; }
-  h1 { font-size: 22px; margin-bottom: 4px; }
-  p.sub { color: #666; margin-top: 0; margin-bottom: 20px; font-size: 14px; }
-  .filtros { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-  .filtros input, .filtros select { padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-  .filtros input { flex: 2; min-width: 200px; }
-  .filtros select { flex: 1; min-width: 150px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
-  .card { background: white; border-radius: 10px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
-  .card img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; }
-  .card h3 { font-size: 15px; margin: 6px 0 2px; }
-  .card p { font-size: 13px; color: #666; margin: 0; }
-  .atualizado { font-size: 12px; color: #999; margin-top: 30px; text-align: center; }
-</style>
+  <meta charset="UTF-8">
+  <title>Fiscaliza RJ - Deputados Federais</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Importando a biblioteca de gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f2; margin: 0; padding: 20px; color: #222; }
+    h1 { font-size: 24px; margin-bottom: 4px; }
+    p.sub { color: #666; margin-top: 0; margin-bottom: 20px; font-size: 14px; }
+    
+    /* Layout dos Filtros */
+    .filtros { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .filtros input, .filtros select { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+    .filtros input { flex: 2; min-width: 200px; }
+    .filtros select { flex: 1; min-width: 150px; }
+
+    /* Layout das Métricas Agregadas (Topo) */
+    .metricas-topo { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+    .metrica-card { background: white; border-radius: 8px; padding: 15px 20px; flex: 1; min-width: 150px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .metrica-card h4 { margin: 0 0 5px 0; font-size: 13px; color: #666; font-weight: normal; }
+    .metrica-card p { margin: 0; font-size: 22px; font-weight: bold; color: #111; }
+
+    /* Layout do Gráfico */
+    .grafico-container { background: white; border-radius: 8px; padding: 20px; margin-bottom: 30px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .grafico-container h3 { margin-top: 0; font-size: 14px; color: #666; margin-bottom: 15px; font-weight: normal; }
+
+    /* Layout do Grid de Deputados */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+    .card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+    .card-header img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+    .card-header div h3 { font-size: 16px; margin: 0 0 4px 0; }
+    .card-header div p { font-size: 12px; color: #666; margin: 0; }
+    
+    .card-stats { margin-bottom: 15px; }
+    .stat-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 13px; }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { color: #666; }
+    .stat-value { font-weight: bold; }
+    
+    .btn-detalhes { display: block; width: 100%; padding: 10px; text-align: center; border: 1px solid #ccc; border-radius: 6px; background: #fff; color: #222; text-decoration: none; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    .btn-detalhes:hover { background: #f0f0f0; }
+
+    .atualizado { font-size: 12px; color: #999; margin-top: 40px; text-align: center; }
+  </style>
 </head>
 <body>
 
-<h1>Fiscaliza RJ</h1>
-<p class="sub">Dados oficiais dos deputados federais do Rio de Janeiro, direto da API da Câmara dos Deputados.</p>
+  <h1>Fiscaliza RJ</h1>
+  <p class="sub">Dados oficiais dos deputados federais do Rio de Janeiro.</p>
 
-<div class="filtros">
-  <input type="text" id="busca" placeholder="Buscar por nome...">
-  <select id="filtroPartido">
-    <option value="todos">Todos os partidos</option>
-  </select>
-</div>
+  <div class="filtros">
+    <select id="filtroPartido">
+      <option value="todos">Todos os partidos</option>
+    </select>
+    <input type="text" id="busca" placeholder="Buscar por nome...">
+  </div>
 
-<div class="grid" id="grid"></div>
+  <!-- Cards de Métricas Agregadas -->
+  <div class="metricas-topo">
+    <div class="metrica-card">
+      <h4>Mandatos exibidos</h4>
+      <p id="totalMandatos">0</p>
+    </div>
+    <div class="metrica-card">
+      <h4>Gasto total (Mês)</h4>
+      <p id="gastoTotal">R$ 0,00</p>
+    </div>
+    <div class="metrica-card">
+      <h4>Presença média</h4>
+      <p id="presencaMedia">--</p> <!-- Placeholder: O robô ainda não puxa isso -->
+    </div>
+  </div>
 
-<p class="atualizado" id="atualizadoEm"></p>
+  <!-- Gráfico de Ranking -->
+  <div class="grafico-container">
+    <h3>Ranking de gasto de gabinete (mês atual)</h3>
+    <canvas id="rankingChart" height="80"></canvas>
+  </div>
+
+  <!-- Grid de Cards Individuais -->
+  <div class="grid" id="grid"></div>
+
+  <p class="atualizado" id="atualizadoEm"></p>
 
 <script>
 let deputados = [];
+let chartInstance = null; // Para guardar o gráfico e poder atualizá-lo
 
+// Formatação de Moeda
+const formataMoeda = (valor) => {
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor || 0);
+};
+
+// 1. Buscar os dados do Robô
 fetch('data/deputados.json')
   .then(res => res.json())
   .then(json => {
     deputados = json.dados;
     montarFiltroPartidos();
-    renderizar();
-    document.getElementById('atualizadoEm').textContent =
-      'Dados atualizados em: ' + new Date(json.atualizadoEm).toLocaleString('pt-BR');
+    renderizar(); // Renderiza a tela pela primeira vez
+    document.getElementById('atualizadoEm').textContent = 'Dados atualizados em: ' + new Date(json.atualizadoEm).toLocaleString('pt-BR');
   })
   .catch(() => {
-    document.getElementById('grid').innerHTML =
-      '<p>Ainda não há dados carregados. O robô de atualização precisa rodar pelo menos uma vez.</p>';
+    document.getElementById('grid').innerHTML = '<p>Ainda não há dados carregados.</p>';
   });
 
 function montarFiltroPartidos() {
@@ -68,32 +123,85 @@ function renderizar() {
   const busca = document.getElementById('busca').value.toLowerCase();
   const partido = document.getElementById('filtroPartido').value;
 
+  // Filtra a lista com base no que foi digitado ou selecionado
   const filtrados = deputados.filter(d =>
     d.nome.toLowerCase().includes(busca) &&
     (partido === 'todos' || d.siglaPartido === partido)
   );
 
-  // Função auxiliar para formatar em Reais
-  const formataMoeda = (valor) => {
-    return new Intl.NumberFormat('pt-BR', { 
-      style: 'currency', 
-      currency: 'BRL' 
-    }).format(valor || 0);
-  };
+  // Ordenar do maior gasto para o menor para exibir no ranking e no grid
+  filtrados.sort((a, b) => (b.gastoMes || 0) - (a.gastoMes || 0));
 
+  // 2. Atualizar as Métricas do Topo
+  document.getElementById('totalMandatos').textContent = filtrados.length;
+  const somaGasto = filtrados.reduce((acc, d) => acc + (d.gastoMes || 0), 0);
+  document.getElementById('gastoTotal').textContent = formataMoeda(somaGasto);
+
+  // 3. Atualizar o Gráfico de Barras
+  atualizarGrafico(filtrados);
+
+  // 4. Atualizar os Cards do Grid
   document.getElementById('grid').innerHTML = filtrados.map(d => `
     <div class="card">
-      <img src="${d.urlFoto}" alt="${d.nome}">
-      <h3>${d.nome}</h3>
-      <p>${d.siglaPartido} · RJ</p>
-      <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #eee;">
-        <p style="font-size: 11px; color: #666; text-transform: uppercase;">Gasto no Mês</p>
-        <p style="font-size: 14px; font-weight: bold; color: #b91c1c; margin-top: 2px;">${formataMoeda(d.gastoMes)}</p>
+      <div class="card-header">
+        <img src="${d.urlFoto}" alt="${d.nome}">
+        <div>
+          <h3>${d.nome}</h3>
+          <p>${d.siglaPartido} - RJ</p>
+        </div>
       </div>
+      <div class="card-stats">
+        <div class="stat-row">
+          <span class="stat-label">💰 Gasto de gabinete</span>
+          <span class="stat-value">${formataMoeda(d.gastoMes)}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">👥 Assessores</span>
+          <span class="stat-value">--</span>
+        </div>
+      </div>
+      <!-- O link aponta para uma página que vamos criar no futuro: perfil.html?id=ID_DO_DEPUTADO -->
+      <a href="perfil.html?id=${d.id}" class="btn-detalhes">Ver detalhes ↗</a>
     </div>
   `).join('');
 }
 
+function atualizarGrafico(dadosFiltrados) {
+  const ctx = document.getElementById('rankingChart').getContext('2d');
+  
+  // Se o gráfico já existir, precisamos destruí-lo antes de desenhar o novo
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  // Pegamos apenas os top 10 para o gráfico não ficar gigante e feio
+  const top10 = dadosFiltrados.slice(0, 10);
+
+  chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: top10.map(d => d.nome),
+      datasets: [{
+        label: 'Gasto de Gabinete (R$)',
+        data: top10.map(d => d.gastoMes || 0),
+        backgroundColor: '#2563eb', // Azul estilo dos seus protótipos
+        borderRadius: 4
+      }]
+    },
+    options: {
+      indexAxis: 'y', // Isso faz a barra ficar horizontal
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { beginAtZero: true, grid: { display: false } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+}
+
+// Escutadores de eventos para os filtros
 document.getElementById('busca').addEventListener('input', renderizar);
 document.getElementById('filtroPartido').addEventListener('change', renderizar);
 </script>
