@@ -102,7 +102,7 @@ const formataMoeda = (valor) => {
 };
 
 // Buscar os dados do JSON gerado
-fetch('data/deputados.json')
+fetch('data/deputados.json?nocache=' + new Date().getTime())
   .then(res => res.json())
   .then(json => {
     deputados = json.dados;
