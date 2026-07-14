@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-07-14T04:41:50Z",
+  "atualizadoEm": "2026-07-14T05:20:59Z",
   "dados": [
     {
       "id": 178937,
@@ -11,7 +11,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/178937.jpg",
       "email": "dep.altineucortes@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 13391,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 160512,
@@ -23,7 +26,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/160512.jpg",
       "email": "dep.aureoribeiro@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 1792,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220605,
@@ -35,7 +41,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220605.jpg",
       "email": "dep.bandeirademello@camara.leg.br",
-      "gastoMes": 1390.53
+      "gastoMes": 1390.53,
+      "projetosApresentados": 486,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220612,
@@ -47,7 +56,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220612.jpg",
       "email": "dep.bebeto@camara.leg.br",
-      "gastoMes": 970.84
+      "gastoMes": 970.84,
+      "projetosApresentados": 485,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 73701,
@@ -59,7 +71,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/73701.jpg",
       "email": "dep.beneditadasilva@camara.leg.br",
-      "gastoMes": 184.19
+      "gastoMes": 184.19,
+      "projetosApresentados": 700,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204460,
@@ -71,7 +86,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204460.jpg",
       "email": "dep.carlosjordy@camara.leg.br",
-      "gastoMes": 2665.72
+      "gastoMes": 2665.72,
+      "projetosApresentados": 967,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 74171,
@@ -83,7 +101,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/74171.jpg",
       "email": "dep.chicoalencar@camara.leg.br",
-      "gastoMes": 309.64
+      "gastoMes": 309.64,
+      "projetosApresentados": 2166,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204462,
@@ -95,7 +116,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204462.jpg",
       "email": "dep.christonietto@camara.leg.br",
-      "gastoMes": 942.58
+      "gastoMes": 942.58,
+      "projetosApresentados": 3383,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220603,
@@ -107,7 +131,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220603.jpg",
       "email": "dep.danicunha@camara.leg.br",
-      "gastoMes": 2840.14
+      "gastoMes": 2840.14,
+      "projetosApresentados": 334,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204459,
@@ -119,7 +146,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204459.jpg",
       "email": "dep.danieladowaguinho@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 261,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220602,
@@ -131,7 +161,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220602.jpg",
       "email": "dep.dimasgadelha@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 452,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204450,
@@ -143,7 +176,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204450.jpg",
       "email": "dep.doutorluizinho@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 1239,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 227991,
@@ -155,7 +191,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/227991.jpg",
       "email": "dep.drflavio@camara.leg.br",
-      "gastoMes": 1746.19
+      "gastoMes": 1746.19,
+      "projetosApresentados": 42,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220614,
@@ -167,7 +206,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220614.jpg",
       "email": "dep.dr.danielsoranz@camara.leg.br",
-      "gastoMes": 1400.47
+      "gastoMes": 1400.47,
+      "projetosApresentados": 230,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 230765,
@@ -179,7 +221,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/230765.jpg",
       "email": "dep.enfermeirarejane@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 143,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220611,
@@ -191,7 +236,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220611.jpg",
       "email": "dep.generalpazuello@camara.leg.br",
-      "gastoMes": 1893.57
+      "gastoMes": 1893.57,
+      "projetosApresentados": 685,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 152605,
@@ -203,7 +251,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/152605.jpg",
       "email": "dep.glauberbraga@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 349,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204456,
@@ -215,7 +266,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204456.jpg",
       "email": "dep.gutembergreis@camara.leg.br",
-      "gastoMes": 1322.27
+      "gastoMes": 1322.27,
+      "projetosApresentados": 277,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204444,
@@ -227,7 +281,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204444.jpg",
       "email": "dep.heliolopes@camara.leg.br",
-      "gastoMes": 862.75
+      "gastoMes": 862.75,
+      "projetosApresentados": 1173,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 141450,
@@ -239,7 +296,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/141450.jpg",
       "email": "dep.hugoleal@camara.leg.br",
-      "gastoMes": 972.39
+      "gastoMes": 972.39,
+      "projetosApresentados": 726,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 74848,
@@ -251,7 +311,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/74848.jpg",
       "email": "dep.jandirafeghali@camara.leg.br",
-      "gastoMes": 712.32
+      "gastoMes": 712.32,
+      "projetosApresentados": 653,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 205550,
@@ -263,7 +326,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/205550.jpg",
       "email": "dep.jorgebraz@camara.leg.br",
-      "gastoMes": 360.91
+      "gastoMes": 360.91,
+      "projetosApresentados": 202,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 74253,
@@ -275,7 +341,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/74253.jpg",
       "email": "dep.juliolopes@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 986,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204457,
@@ -287,7 +356,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204457.jpg",
       "email": "dep.juninhodopneu@camara.leg.br",
-      "gastoMes": 6413.84
+      "gastoMes": 6413.84,
+      "projetosApresentados": 414,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 74856,
@@ -299,7 +371,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/74856.jpg",
       "email": "dep.lauracarneiro@camara.leg.br",
-      "gastoMes": 2438.01
+      "gastoMes": 2438.01,
+      "projetosApresentados": 5339,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 74858,
@@ -311,7 +386,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/74858.jpg",
       "email": "dep.lindberghfarias@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 1613,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204455,
@@ -323,7 +401,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204455.jpg",
       "email": "dep.luizlima@camara.leg.br",
-      "gastoMes": 434.09
+      "gastoMes": 434.09,
+      "projetosApresentados": 1236,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220599,
@@ -335,7 +416,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220599.jpg",
       "email": "dep.marcelocrivella@camara.leg.br",
-      "gastoMes": 931.7
+      "gastoMes": 931.7,
+      "projetosApresentados": 670,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 160161,
@@ -347,7 +431,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/160161.jpg",
       "email": "dep.marceloqueiroz@camara.leg.br",
-      "gastoMes": 1010.68
+      "gastoMes": 1010.68,
+      "projetosApresentados": 786,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 236375,
@@ -359,7 +446,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/236375.jpg",
       "email": "dep.marcosbraz@camara.leg.br",
-      "gastoMes": 3629.13
+      "gastoMes": 3629.13,
+      "projetosApresentados": 24,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 178943,
@@ -371,7 +461,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/178943.jpg",
       "email": "dep.marcossoares@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 181,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220604,
@@ -383,7 +476,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220604.jpg",
       "email": "dep.marcostavares@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 2701,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220607,
@@ -395,7 +491,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220607.jpg",
       "email": "dep.maxlemos@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 661,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220617,
@@ -407,7 +506,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220617.jpg",
       "email": "dep.murillogouvea@camara.leg.br",
-      "gastoMes": 3058.25
+      "gastoMes": 3058.25,
+      "projetosApresentados": 430,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204441,
@@ -419,7 +521,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204441.jpg",
       "email": "dep.otonidepaula@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 373,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220615,
@@ -431,7 +536,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220615.jpg",
       "email": "dep.pastorhenriquevieira@camara.leg.br",
-      "gastoMes": 2755.16
+      "gastoMes": 2755.16,
+      "projetosApresentados": 1433,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 122158,
@@ -443,7 +551,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/122158.jpg",
       "email": "dep.pedropaulo@camara.leg.br",
-      "gastoMes": 0
+      "gastoMes": 0.0,
+      "projetosApresentados": 179,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220606,
@@ -455,7 +566,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220606.jpg",
       "email": "dep.reimont@camara.leg.br",
-      "gastoMes": 896.65
+      "gastoMes": 896.65,
+      "projetosApresentados": 1022,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 221329,
@@ -467,7 +581,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/221329.jpg",
       "email": "dep.ricardoabrao@camara.leg.br",
-      "gastoMes": 400.04
+      "gastoMes": 400.04,
+      "projetosApresentados": 243,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220613,
@@ -479,7 +596,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220613.jpg",
       "email": "dep.robertomonteiropai@camara.leg.br",
-      "gastoMes": 1779.22
+      "gastoMes": 1779.22,
+      "projetosApresentados": 768,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 178945,
@@ -491,7 +611,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/178945.jpg",
       "email": "dep.rosangelagomes@camara.leg.br",
-      "gastoMes": 1173.21
+      "gastoMes": 1173.21,
+      "projetosApresentados": 21,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220618,
@@ -503,7 +626,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220618.jpg",
       "email": "dep.sargentoportugal@camara.leg.br",
-      "gastoMes": 676.84
+      "gastoMes": 676.84,
+      "projetosApresentados": 7293,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 178946,
@@ -515,7 +641,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/178946.jpg",
       "email": "dep.sorayasantos@camara.leg.br",
-      "gastoMes": 649.0
+      "gastoMes": 649.0,
+      "projetosApresentados": 389,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 178947,
@@ -527,7 +656,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/178947.jpg",
       "email": "dep.sostenescavalcante@camara.leg.br",
-      "gastoMes": 1422.91
+      "gastoMes": 1422.91,
+      "projetosApresentados": 5401,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 204464,
@@ -539,7 +671,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/204464.jpg",
       "email": "dep.taliriapetrone@camara.leg.br",
-      "gastoMes": 425.82
+      "gastoMes": 425.82,
+      "projetosApresentados": 1751,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     },
     {
       "id": 220598,
@@ -551,7 +686,10 @@
       "idLegislatura": 57,
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220598.jpg",
       "email": "dep.tarcisiomotta@camara.leg.br",
-      "gastoMes": 450.0
+      "gastoMes": 450.0,
+      "projetosApresentados": 2542,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
     }
   ]
 }
