@@ -4,33 +4,26 @@
   <meta charset="UTF-8">
   <title>Fiscaliza RJ - Deputados Federais</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Importando a biblioteca de gráficos -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body { font-family: Arial, sans-serif; background: #f4f4f2; margin: 0; padding: 20px; color: #222; }
     h1 { font-size: 24px; margin-bottom: 4px; }
     p.sub { color: #666; margin-top: 0; margin-bottom: 20px; font-size: 14px; }
     
-    /* Layout dos Filtros */
     .filtros { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
     .filtros input, .filtros select { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
     .filtros input { flex: 2; min-width: 200px; }
     .filtros select { flex: 1; min-width: 150px; }
 
-    /* Layout das Métricas Agregadas (Topo) */
     .metricas-topo { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
     .metrica-card { background: white; border-radius: 8px; padding: 15px 20px; flex: 1; min-width: 150px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .metrica-card h4 { margin: 0 0 5px 0; font-size: 13px; color: #666; font-weight: normal; }
     .metrica-card p { margin: 0; font-size: 22px; font-weight: bold; color: #111; }
 
-    /* Layout do Gráfico */
     .grafico-container { background: white; border-radius: 8px; padding: 20px; margin-bottom: 30px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .grafico-container h3 { margin-top: 0; font-size: 14px; color: #666; margin-bottom: 15px; font-weight: normal; }
-    
-    /* CORREÇÃO DO GRÁFICO: Contêiner com altura travada */
     .grafico-wrapper { position: relative; height: 350px; width: 100%; }
 
-    /* Layout do Grid de Deputados */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
     .card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
@@ -59,17 +52,20 @@
     <select id="filtroPartido">
       <option value="todos">Todos os partidos</option>
     </select>
+    
+    <!-- Novo filtro de mês -->
+    <select id="filtroMes"></select>
+
     <input type="text" id="busca" placeholder="Buscar por nome...">
   </div>
 
-  <!-- Cards de Métricas Agregadas -->
   <div class="metricas-topo">
     <div class="metrica-card">
       <h4>Mandatos exibidos</h4>
       <p id="totalMandatos">0</p>
     </div>
     <div class="metrica-card">
-      <h4>Gasto total (Mês)</h4>
+      <h4>Gasto total (Selecionado)</h4>
       <p id="gastoTotal">R$ 0,00</p>
     </div>
     <div class="metrica-card">
@@ -78,16 +74,13 @@
     </div>
   </div>
 
-  <!-- Gráfico de Ranking -->
   <div class="grafico-container">
-    <h3>Ranking de gasto de gabinete (mês atual)</h3>
-    <!-- O contêiner abaixo trava a altura e impede o bug do bloco gigante -->
+    <h3 id="tituloGrafico">Ranking de gasto de gabinete</h3>
     <div class="grafico-wrapper">
       <canvas id="rankingChart"></canvas>
     </div>
   </div>
 
-  <!-- Grid de Cards Individuais -->
   <div class="grid" id="grid"></div>
 
   <p class="atualizado" id="atualizadoEm"></p>
@@ -96,17 +89,17 @@
 let deputados = [];
 let chartInstance = null; 
 
-// Formatação de Moeda
 const formataMoeda = (valor) => {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor || 0);
 };
 
-// Buscar os dados do JSON gerado
+// Cache buster para forçar o download do arquivo novo
 fetch('data/deputados.json?nocache=' + new Date().getTime())
   .then(res => res.json())
   .then(json => {
     deputados = json.dados;
     montarFiltroPartidos();
+    montarFiltroMeses(); // Carrega o dropdown de meses
     renderizar(); 
     document.getElementById('atualizadoEm').textContent = 'Dados atualizados em: ' + new Date(json.atualizadoEm).toLocaleString('pt-BR');
   })
@@ -125,19 +118,50 @@ function montarFiltroPartidos() {
   });
 }
 
+function montarFiltroMeses() {
+  const select = document.getElementById('filtroMes');
+  const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+  
+  // Define o mês atual para já vir selecionado
+  const mesAtual = new Date().getMonth() + 1; 
+
+  meses.forEach((nome, index) => {
+    const numMes = (index + 1).toString();
+    const opt = document.createElement('option');
+    opt.value = numMes;
+    opt.textContent = nome;
+    if (numMes == mesAtual) {
+        opt.selected = true;
+    }
+    select.appendChild(opt);
+  });
+}
+
 function renderizar() {
   const busca = document.getElementById('busca').value.toLowerCase();
   const partido = document.getElementById('filtroPartido').value;
+  const mesSelecionado = document.getElementById('filtroMes').value;
+  const nomeMes = document.getElementById('filtroMes').options[document.getElementById('filtroMes').selectedIndex].text;
 
-  const filtrados = deputados.filter(d =>
+  // Atualiza o título do gráfico para refletir o mês
+  document.getElementById('tituloGrafico').textContent = `Ranking de gasto de gabinete (${nomeMes})`;
+
+  let filtrados = deputados.filter(d =>
     d.nome.toLowerCase().includes(busca) &&
     (partido === 'todos' || d.siglaPartido === partido)
   );
 
-  filtrados.sort((a, b) => (b.gastoMes || 0) - (a.gastoMes || 0));
+  // Mapeia o gasto específico do mês para cada deputado, usando 0 se não existir
+  filtrados = filtrados.map(d => {
+      const gastoDoMes = d.gastosMensais ? (d.gastosMensais[mesSelecionado] || 0) : 0;
+      return { ...d, gastoFiltrado: gastoDoMes };
+  });
+
+  // Ordena pelo gasto do mês selecionado
+  filtrados.sort((a, b) => b.gastoFiltrado - a.gastoFiltrado);
 
   document.getElementById('totalMandatos').textContent = filtrados.length;
-  const somaGasto = filtrados.reduce((acc, d) => acc + (d.gastoMes || 0), 0);
+  const somaGasto = filtrados.reduce((acc, d) => acc + d.gastoFiltrado, 0);
   document.getElementById('gastoTotal').textContent = formataMoeda(somaGasto);
 
   atualizarGrafico(filtrados);
@@ -153,20 +177,20 @@ function renderizar() {
       </div>
       <div class="card-stats">
         <div class="stat-row">
-          <span class="stat-label">💰 Gasto de Gabinete (mês)</span>
-          <span class="stat-value">${formataMoeda(d.gastoMes)}</span>
+          <span class="stat-label">💰 Gasto (${nomeMes})</span>
+          <span class="stat-value">${formataMoeda(d.gastoFiltrado)}</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">📝 Projetos Apresentados</span>
-          <span class="stat-value">${d.projetosApresentados}</span>
+          <span class="stat-value">${d.projetosApresentados !== undefined ? d.projetosApresentados : '0'}</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">👥 Assessores (Gabinete)</span>
-          <span class="stat-value">${d.assessores}</span>
+          <span class="stat-value">${d.assessores || 'N/D'}</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">✅ Presença em Plenário</span>
-          <span class="stat-value">${d.presencaPlenario}</span>
+          <span class="stat-value">${d.presencaPlenario || 'N/D'}</span>
         </div>
       </div>
       <a href="perfil.html?id=${d.id}" class="btn-detalhes">Ver detalhes ↗</a>
@@ -189,7 +213,7 @@ function atualizarGrafico(dadosFiltrados) {
       labels: top10.map(d => d.nome),
       datasets: [{
         label: 'Gasto de Gabinete (R$)',
-        data: top10.map(d => d.gastoMes || 0),
+        data: top10.map(d => d.gastoFiltrado),
         backgroundColor: '#2563eb', 
         borderRadius: 4
       }]
@@ -209,6 +233,7 @@ function atualizarGrafico(dadosFiltrados) {
 
 document.getElementById('busca').addEventListener('input', renderizar);
 document.getElementById('filtroPartido').addEventListener('change', renderizar);
+document.getElementById('filtroMes').addEventListener('change', renderizar); // Recalcula ao mudar o mês
 </script>
 
 </body>
