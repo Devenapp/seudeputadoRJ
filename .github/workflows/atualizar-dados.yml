@@ -15,32 +15,12 @@ jobs:
       - name: Baixar o repositório
         uses: actions/checkout@v4
 
-      - name: Buscar lista de deputados do RJ
-        run: |
-          curl -s -4 --retry 3 --max-time 30 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" -H "Accept: application/json" "https://dadosabertos.camara.leg.br/api/v2/deputados?siglaUf=RJ&itens=100&ordem=ASC&ordenarPor=nome" > bruto.json
-
-      - name: Buscar gasto de gabinete de cada deputado
-        run: |
-          ANO=$(date -u +%Y)
-          MES=$(date -u +%-m)
-          echo "[]" > gastos.json
-          for id in $(jq -r '.dados[].id' bruto.json); do
-            curl -s -4 --retry 3 --max-time 30 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" -H "Accept: application/json" "https://dadosabertos.camara.leg.br/api/v2/deputados/${id}/despesas?ano=${ANO}&mes=${MES}&itens=100" > despesa_temp.json
-            total=$(jq '[.dados[].valorDocumento] | add // 0' despesa_temp.json)
-            jq --arg id "$id" --argjson total "$total" '. += [{"id": ($id|tonumber), "gastoMes": $total}]' gastos.json > gastos_novo.json
-            mv gastos_novo.json gastos.json
-            sleep 0.5
-          done
-
-      - name: Juntar tudo num único arquivo de dados
+      - name: Buscar dados na API da Câmara
         run: |
           mkdir -p data
-          jq -n --slurpfile deps bruto.json --slurpfile gastos gastos.json --arg agora "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '
-            {
-              atualizadoEm: $agora,
-              dados: ($deps[0].dados | map(. as $d | $d + {gastoMes: (($gastos[0][] | select(.id == $d.id) | .gastoMes) // 0)}))
-            }' > data/deputados.json
-          rm -f bruto.json gastos.json despesa_temp.json
+          curl -s "https://dadosabertos.camara.leg.br/api/v2/deputados?siglaUf=RJ&itens=100&ordem=ASC&ordenarPor=nome" > bruto.json
+          echo "{\"atualizadoEm\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\", \"dados\": $(jq '.dados' bruto.json)}" > data/deputados.json
+          rm bruto.json
 
       - name: Salvar o arquivo atualizado no repositório
         run: |
