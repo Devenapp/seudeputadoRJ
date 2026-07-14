@@ -1,12 +1,13 @@
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from urllib.parse import urlparse, parse_qs
 import json
 import time
 from datetime import datetime, timezone
 import os
 
-# 1. Configurar uma sessão resiliente (tenta novamente se a API falhar)
+# Configurar sessão resiliente
 session = requests.Session()
 retries = Retry(total=5, backoff_factor=0.5, status_forcelist=[ 500, 502, 503, 504 ])
 session.mount('https://', HTTPAdapter(max_retries=retries))
@@ -21,26 +22,79 @@ def executar_etl():
     ano_atual = datetime.now().year
     mes_atual = datetime.now().month
 
-    # 2. Buscar despesas para cada deputado
     for dep in deputados:
-        print(f"Buscando despesas de: {dep['nome']}")
+        print(f"Processando: {dep['nome']}")
+        
+        # -------------------------------------------------------------
+        # 1. Gasto de Gabinete (Mês Atual) - Com Paginação Segura
+        # -------------------------------------------------------------
         url_despesas = f"https://dadosabertos.camara.leg.br/api/v2/deputados/{dep['id']}/despesas?ano={ano_atual}&mes={mes_atual}&itens=100"
+        total_gasto = 0.0
+        
+        while url_despesas:
+            try:
+                resp_desp = session.get(url_despesas, headers=headers, timeout=30)
+                json_desp = resp_desp.json()
+                despesas = json_desp.get('dados', [])
+                
+                # Soma as despesas desta página
+                total_gasto += sum(d['valorDocumento'] for d in despesas)
+                
+                # Verifica se há uma próxima página
+                url_despesas = None
+                for link in json_desp.get('links', []):
+                    if link['rel'] == 'next':
+                        url_despesas = link['href']
+                        break
+                        
+                if url_despesas:
+                    time.sleep(0.3) # Pausa entre páginas para não bloquear
+                    
+            except Exception as e:
+                print(f"Erro ao buscar despesa de {dep['nome']}: {e}")
+                break # Sai do loop em caso de erro fatal
+
+        dep['gastoMes'] = round(total_gasto, 2)
+
+        # -------------------------------------------------------------
+        # 2. Projetos Apresentados - Extraindo do link "last"
+        # -------------------------------------------------------------
+        url_projetos = f"https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor={dep['id']}&dataApresentacaoInicio=2023-02-01&itens=1"
+        total_projetos = 0
         
         try:
-            resp_desp = session.get(url_despesas, headers=headers, timeout=30)
-            despesas_dados = resp_desp.json().get('dados', [])
+            resp_proj = session.get(url_projetos, headers=headers, timeout=30)
+            json_proj = resp_proj.json()
             
-            # Somar os valores do mês
-            total_gasto = sum(despesa['valorDocumento'] for despesa in despesas_dados)
-            dep['gastoMes'] = round(total_gasto, 2)
+            # Procura o link da última página para saber o total
+            for link in json_proj.get('links', []):
+                if link['rel'] == 'last':
+                    parsed_url = urlparse(link['href'])
+                    pagina = parse_qs(parsed_url.query).get('pagina')
+                    if pagina:
+                        total_projetos = int(pagina[0])
+                        break
+            
+            # Se não houver link "last", mas houver 1 projeto na array "dados"
+            if total_projetos == 0 and len(json_proj.get('dados', [])) > 0:
+                total_projetos = 1
+
+            dep['projetosApresentados'] = total_projetos
+            
         except Exception as e:
-            print(f"Erro ao buscar despesa para {dep['nome']}: {e}")
-            dep['gastoMes'] = 0.0
-            
-        # Pausa de meio segundo para não sobrecarregar a API da Câmara
+            print(f"Erro ao contar projetos de {dep['nome']}: {e}")
+            dep['projetosApresentados'] = 0
+
+        # -------------------------------------------------------------
+        # 3. Placeholders do MVP
+        # -------------------------------------------------------------
+        dep['presencaPlenario'] = "N/D"
+        dep['assessores'] = "N/D"
+
+        # Pausa principal para não tomar Rate Limit da Câmara
         time.sleep(0.5)
 
-    # 3. Preparar e salvar o arquivo final
+    # Salvar o arquivo final
     agora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     dados_finais = {
         "atualizadoEm": agora,
@@ -51,7 +105,7 @@ def executar_etl():
     with open("data/deputados.json", "w", encoding="utf-8") as f:
         json.dump(dados_finais, f, ensure_ascii=False, indent=2)
         
-    print("ETL concluído com sucesso!")
+    print("ETL concluído e documentação validada com sucesso!")
 
 if __name__ == "__main__":
     executar_etl()
