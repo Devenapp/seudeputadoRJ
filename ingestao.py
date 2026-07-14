@@ -56,17 +56,17 @@ def executar_etl():
 
         dep['gastoMes'] = round(total_gasto, 2)
 
+       # -------------------------------------------------------------
+        # 2. Projetos Apresentados (Apenas Leis da Legislatura atual)
         # -------------------------------------------------------------
-        # 2. Projetos Apresentados - Extraindo do link "last"
-        # -------------------------------------------------------------
-        url_projetos = f"https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor={dep['id']}&dataApresentacaoInicio=2023-02-01&itens=1"
+        # Adicionamos siglaTipo=PL, PEC e PLP para excluir Requerimentos e Indicações
+        url_projetos = f"https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor={dep['id']}&dataApresentacaoInicio=2023-02-01&siglaTipo=PL&siglaTipo=PEC&siglaTipo=PLP&itens=1"
         total_projetos = 0
         
         try:
             resp_proj = session.get(url_projetos, headers=headers, timeout=30)
             json_proj = resp_proj.json()
             
-            # Procura o link da última página para saber o total
             for link in json_proj.get('links', []):
                 if link['rel'] == 'last':
                     parsed_url = urlparse(link['href'])
@@ -75,7 +75,6 @@ def executar_etl():
                         total_projetos = int(pagina[0])
                         break
             
-            # Se não houver link "last", mas houver 1 projeto na array "dados"
             if total_projetos == 0 and len(json_proj.get('dados', [])) > 0:
                 total_projetos = 1
 
@@ -84,7 +83,6 @@ def executar_etl():
         except Exception as e:
             print(f"Erro ao contar projetos de {dep['nome']}: {e}")
             dep['projetosApresentados'] = 0
-
         # -------------------------------------------------------------
         # 3. Placeholders do MVP
         # -------------------------------------------------------------
