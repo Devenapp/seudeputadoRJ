@@ -26,6 +26,9 @@
     /* Layout do Gráfico */
     .grafico-container { background: white; border-radius: 8px; padding: 20px; margin-bottom: 30px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .grafico-container h3 { margin-top: 0; font-size: 14px; color: #666; margin-bottom: 15px; font-weight: normal; }
+    
+    /* CORREÇÃO DO GRÁFICO: Contêiner com altura travada */
+    .grafico-wrapper { position: relative; height: 350px; width: 100%; }
 
     /* Layout do Grid de Deputados */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
@@ -71,14 +74,17 @@
     </div>
     <div class="metrica-card">
       <h4>Presença média</h4>
-      <p id="presencaMedia">--</p> <!-- Placeholder: O robô ainda não puxa isso -->
+      <p id="presencaMedia">--</p>
     </div>
   </div>
 
   <!-- Gráfico de Ranking -->
   <div class="grafico-container">
     <h3>Ranking de gasto de gabinete (mês atual)</h3>
-    <canvas id="rankingChart" height="80"></canvas>
+    <!-- O contêiner abaixo trava a altura e impede o bug do bloco gigante -->
+    <div class="grafico-wrapper">
+      <canvas id="rankingChart"></canvas>
+    </div>
   </div>
 
   <!-- Grid de Cards Individuais -->
@@ -88,20 +94,20 @@
 
 <script>
 let deputados = [];
-let chartInstance = null; // Para guardar o gráfico e poder atualizá-lo
+let chartInstance = null; 
 
 // Formatação de Moeda
 const formataMoeda = (valor) => {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor || 0);
 };
 
-// 1. Buscar os dados do Robô
+// Buscar os dados do JSON gerado
 fetch('data/deputados.json')
   .then(res => res.json())
   .then(json => {
     deputados = json.dados;
     montarFiltroPartidos();
-    renderizar(); // Renderiza a tela pela primeira vez
+    renderizar(); 
     document.getElementById('atualizadoEm').textContent = 'Dados atualizados em: ' + new Date(json.atualizadoEm).toLocaleString('pt-BR');
   })
   .catch(() => {
@@ -123,24 +129,19 @@ function renderizar() {
   const busca = document.getElementById('busca').value.toLowerCase();
   const partido = document.getElementById('filtroPartido').value;
 
-  // Filtra a lista com base no que foi digitado ou selecionado
   const filtrados = deputados.filter(d =>
     d.nome.toLowerCase().includes(busca) &&
     (partido === 'todos' || d.siglaPartido === partido)
   );
 
-  // Ordenar do maior gasto para o menor para exibir no ranking e no grid
   filtrados.sort((a, b) => (b.gastoMes || 0) - (a.gastoMes || 0));
 
-  // 2. Atualizar as Métricas do Topo
   document.getElementById('totalMandatos').textContent = filtrados.length;
   const somaGasto = filtrados.reduce((acc, d) => acc + (d.gastoMes || 0), 0);
   document.getElementById('gastoTotal').textContent = formataMoeda(somaGasto);
 
-  // 3. Atualizar o Gráfico de Barras
   atualizarGrafico(filtrados);
 
-  // 4. Atualizar os Cards do Grid
   document.getElementById('grid').innerHTML = filtrados.map(d => `
     <div class="card">
       <div class="card-header">
@@ -160,7 +161,6 @@ function renderizar() {
           <span class="stat-value">--</span>
         </div>
       </div>
-      <!-- O link aponta para uma página que vamos criar no futuro: perfil.html?id=ID_DO_DEPUTADO -->
       <a href="perfil.html?id=${d.id}" class="btn-detalhes">Ver detalhes ↗</a>
     </div>
   `).join('');
@@ -169,12 +169,10 @@ function renderizar() {
 function atualizarGrafico(dadosFiltrados) {
   const ctx = document.getElementById('rankingChart').getContext('2d');
   
-  // Se o gráfico já existir, precisamos destruí-lo antes de desenhar o novo
   if (chartInstance) {
     chartInstance.destroy();
   }
 
-  // Pegamos apenas os top 10 para o gráfico não ficar gigante e feio
   const top10 = dadosFiltrados.slice(0, 10);
 
   chartInstance = new Chart(ctx, {
@@ -184,12 +182,12 @@ function atualizarGrafico(dadosFiltrados) {
       datasets: [{
         label: 'Gasto de Gabinete (R$)',
         data: top10.map(d => d.gastoMes || 0),
-        backgroundColor: '#2563eb', // Azul estilo dos seus protótipos
+        backgroundColor: '#2563eb', 
         borderRadius: 4
       }]
     },
     options: {
-      indexAxis: 'y', // Isso faz a barra ficar horizontal
+      indexAxis: 'y', 
       responsive: true,
       maintainAspectRatio: false,
       plugins: { legend: { display: false } },
@@ -201,7 +199,6 @@ function atualizarGrafico(dadosFiltrados) {
   });
 }
 
-// Escutadores de eventos para os filtros
 document.getElementById('busca').addEventListener('input', renderizar);
 document.getElementById('filtroPartido').addEventListener('change', renderizar);
 </script>
