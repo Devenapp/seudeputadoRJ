@@ -153,12 +153,20 @@ function renderizar() {
       </div>
       <div class="card-stats">
         <div class="stat-row">
-          <span class="stat-label">💰 Gasto de gabinete</span>
+          <span class="stat-label">💰 Gasto (mês)</span>
           <span class="stat-value">${formataMoeda(d.gastoMes)}</span>
         </div>
         <div class="stat-row">
+          <span class="stat-label">📝 Projetos (Legis.)</span>
+          <span class="stat-value">${d.projetosApresentados}</span>
+        </div>
+        <div class="stat-row">
           <span class="stat-label">👥 Assessores</span>
-          <span class="stat-value">--</span>
+          <span class="stat-value">${d.assessores}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">✅ Presença</span>
+          <span class="stat-value">${d.presencaPlenario}</span>
         </div>
       </div>
       <a href="perfil.html?id=${d.id}" class="btn-detalhes">Ver detalhes ↗</a>
