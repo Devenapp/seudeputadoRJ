@@ -20,27 +20,30 @@ def executar_etl():
     deputados = response.json()['dados']
     
     ano_atual = datetime.now().year
-    mes_atual = datetime.now().month
 
     for dep in deputados:
         print(f"Processando: {dep['nome']}")
         
         # -------------------------------------------------------------
-        # 1. Gasto de Gabinete (Mês Atual) - Com Paginação Segura
+        # 1. Gasto de Gabinete (Ano Inteiro agrupado por Mês)
         # -------------------------------------------------------------
-        url_despesas = f"https://dadosabertos.camara.leg.br/api/v2/deputados/{dep['id']}/despesas?ano={ano_atual}&mes={mes_atual}&itens=100"
-        total_gasto = 0.0
+        # Removemos o parâmetro &mes= para puxar o ano todo
+        url_despesas = f"https://dadosabertos.camara.leg.br/api/v2/deputados/{dep['id']}/despesas?ano={ano_atual}&itens=100"
+        
+        # Inicia um dicionário com todos os meses zerados
+        gastos_mensais = {str(m): 0.0 for m in range(1, 13)}
         
         while url_despesas:
             try:
                 resp_desp = session.get(url_despesas, headers=headers, timeout=30)
                 json_desp = resp_desp.json()
-                despesas = json_desp.get('dados', [])
                 
-                # Soma as despesas desta página
-                total_gasto += sum(d['valorDocumento'] for d in despesas)
+                # Soma a despesa no mês correspondente
+                for d in json_desp.get('dados', []):
+                    mes = str(d['mes'])
+                    if mes in gastos_mensais:
+                        gastos_mensais[mes] += d['valorDocumento']
                 
-                # Verifica se há uma próxima página
                 url_despesas = None
                 for link in json_desp.get('links', []):
                     if link['rel'] == 'next':
@@ -48,18 +51,18 @@ def executar_etl():
                         break
                         
                 if url_despesas:
-                    time.sleep(0.3) # Pausa entre páginas para não bloquear
+                    time.sleep(0.3)
                     
             except Exception as e:
                 print(f"Erro ao buscar despesa de {dep['nome']}: {e}")
-                break # Sai do loop em caso de erro fatal
+                break
 
-        dep['gastoMes'] = round(total_gasto, 2)
+        # Arredonda os valores finais de cada mês
+        dep['gastosMensais'] = {m: round(v, 2) for m, v in gastos_mensais.items()}
 
-       # -------------------------------------------------------------
-        # 2. Projetos Apresentados (Apenas Leis da Legislatura atual)
         # -------------------------------------------------------------
-        # Adicionamos siglaTipo=PL, PEC e PLP para excluir Requerimentos e Indicações
+        # 2. Projetos Apresentados (Apenas Leis na Legislatura Atual)
+        # -------------------------------------------------------------
         url_projetos = f"https://dadosabertos.camara.leg.br/api/v2/proposicoes?idDeputadoAutor={dep['id']}&dataApresentacaoInicio=2023-02-01&siglaTipo=PL&siglaTipo=PEC&siglaTipo=PLP&itens=1"
         total_projetos = 0
         
@@ -83,16 +86,15 @@ def executar_etl():
         except Exception as e:
             print(f"Erro ao contar projetos de {dep['nome']}: {e}")
             dep['projetosApresentados'] = 0
+
         # -------------------------------------------------------------
         # 3. Placeholders do MVP
         # -------------------------------------------------------------
         dep['presencaPlenario'] = "N/D"
         dep['assessores'] = "N/D"
 
-        # Pausa principal para não tomar Rate Limit da Câmara
         time.sleep(0.5)
 
-    # Salvar o arquivo final
     agora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     dados_finais = {
         "atualizadoEm": agora,
