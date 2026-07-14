@@ -73,11 +73,23 @@ function renderizar() {
     (partido === 'todos' || d.siglaPartido === partido)
   );
 
+  // Função auxiliar para formatar em Reais
+  const formataMoeda = (valor) => {
+    return new Intl.NumberFormat('pt-BR', { 
+      style: 'currency', 
+      currency: 'BRL' 
+    }).format(valor || 0);
+  };
+
   document.getElementById('grid').innerHTML = filtrados.map(d => `
     <div class="card">
       <img src="${d.urlFoto}" alt="${d.nome}">
       <h3>${d.nome}</h3>
       <p>${d.siglaPartido} · RJ</p>
+      <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #eee;">
+        <p style="font-size: 11px; color: #666; text-transform: uppercase;">Gasto no Mês</p>
+        <p style="font-size: 14px; font-weight: bold; color: #b91c1c; margin-top: 2px;">${formataMoeda(d.gastoMes)}</p>
+      </div>
     </div>
   `).join('');
 }
