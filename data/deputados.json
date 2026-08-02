@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-07-31T08:43:26Z",
+  "atualizadoEm": "2026-08-02T08:14:54Z",
   "dados": [
     {
       "id": 178937,
@@ -181,7 +181,7 @@
       "email": "dep.chicoalencar@camara.leg.br",
       "gastosMensais": {
         "1": 41236.54,
-        "2": 42217.5,
+        "2": 41515.74,
         "3": 42901.16,
         "4": 39359.83,
         "5": 46431.65,
@@ -697,7 +697,7 @@
         "11": 0.0,
         "12": 0.0
       },
-      "projetosApresentados": 317,
+      "projetosApresentados": 320,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -725,7 +725,7 @@
         "11": 0.0,
         "12": 0.0
       },
-      "projetosApresentados": 86,
+      "projetosApresentados": 87,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -893,7 +893,7 @@
         "11": 0.0,
         "12": 0.0
       },
-      "projetosApresentados": 529,
+      "projetosApresentados": 531,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -936,12 +936,12 @@
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220617.jpg",
       "email": "dep.murillogouvea@camara.leg.br",
       "gastosMensais": {
-        "1": 25291.47,
+        "1": 26812.73,
         "2": 24636.57,
         "3": 39728.44,
-        "4": 39031.47,
+        "4": 41085.08,
         "5": 67346.37,
-        "6": 22910.61,
+        "6": 28756.51,
         "7": 9615.21,
         "8": 0.0,
         "9": 0.0,
@@ -1104,10 +1104,10 @@
       "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220613.jpg",
       "email": "dep.robertomonteiropai@camara.leg.br",
       "gastosMensais": {
-        "1": 39404.95,
+        "1": 39436.4,
         "2": 38111.3,
-        "3": 30163.25,
-        "4": 41933.91,
+        "3": 30203.2,
+        "4": 41976.41,
         "5": 47935.64,
         "6": 30926.09,
         "7": 5303.63,
@@ -1245,8 +1245,8 @@
       "email": "dep.taliriapetrone@camara.leg.br",
       "gastosMensais": {
         "1": 46338.85,
-        "2": 60400.36,
-        "3": 63300.93,
+        "2": 57036.49,
+        "3": 58031.31,
         "4": 43945.43,
         "5": 50346.89,
         "6": 29835.04,
