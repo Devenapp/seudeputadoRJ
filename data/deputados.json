@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-10-13T13:24:17Z",
+  "atualizadoEm": "2026-10-14T11:02:26Z",
   "dados": [
     {
       "id": 178937,
@@ -730,6 +730,34 @@
       "assessores": "N/D"
     },
     {
+      "id": 220616,
+      "uri": "https://dadosabertos.camara.leg.br/api/v2/deputados/220616",
+      "nome": "Luciano Vieira",
+      "siglaPartido": "PSDB",
+      "uriPartido": "https://dadosabertos.camara.leg.br/api/v2/partidos/36835",
+      "siglaUf": "RJ",
+      "idLegislatura": 57,
+      "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/220616.jpg",
+      "email": "dep.lucianovieira@camara.leg.br",
+      "gastosMensais": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0,
+        "6": 0.0,
+        "7": 0.0,
+        "8": 0.0,
+        "9": 0.0,
+        "10": 0.0,
+        "11": 0.0,
+        "12": 0.0
+      },
+      "projetosApresentados": 49,
+      "presencaPlenario": "N/D",
+      "assessores": "N/D"
+    },
+    {
       "id": 204455,
       "uri": "https://dadosabertos.camara.leg.br/api/v2/deputados/204455",
       "nome": "Luiz Lima",
@@ -814,34 +842,6 @@
       "assessores": "N/D"
     },
     {
-      "id": 236375,
-      "uri": "https://dadosabertos.camara.leg.br/api/v2/deputados/236375",
-      "nome": "Marcos Braz",
-      "siglaPartido": "PSDB",
-      "uriPartido": "https://dadosabertos.camara.leg.br/api/v2/partidos/36835",
-      "siglaUf": "RJ",
-      "idLegislatura": 57,
-      "urlFoto": "https://www.camara.leg.br/internet/deputado/bandep/236375.jpg",
-      "email": "dep.marcosbraz@camara.leg.br",
-      "gastosMensais": {
-        "1": 0.0,
-        "2": 0.0,
-        "3": 0.0,
-        "4": 0.0,
-        "5": 0.0,
-        "6": 0.0,
-        "7": 0.0,
-        "8": 0.0,
-        "9": 0.0,
-        "10": 0.0,
-        "11": 0.0,
-        "12": 0.0
-      },
-      "projetosApresentados": 15,
-      "presencaPlenario": "N/D",
-      "assessores": "N/D"
-    },
-    {
       "id": 178943,
       "uri": "https://dadosabertos.camara.leg.br/api/v2/deputados/178943",
       "nome": "Marcos Soares",
@@ -893,7 +893,7 @@
         "11": 0.0,
         "12": 0.0
       },
-      "projetosApresentados": 542,
+      "projetosApresentados": 544,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
