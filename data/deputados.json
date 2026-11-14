@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "2026-11-13T13:51:02Z",
+  "atualizadoEm": "2026-11-14T12:54:12Z",
   "dados": [
     {
       "id": 178937,
@@ -137,7 +137,7 @@
         "11": 1576.32,
         "12": 0.0
       },
-      "projetosApresentados": 74,
+      "projetosApresentados": 78,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -193,7 +193,7 @@
         "11": 282.14,
         "12": 0.0
       },
-      "projetosApresentados": 107,
+      "projetosApresentados": 111,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -305,7 +305,7 @@
         "11": 0.0,
         "12": 0.0
       },
-      "projetosApresentados": 68,
+      "projetosApresentados": 72,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -473,7 +473,7 @@
         "11": 0.0,
         "12": 0.0
       },
-      "projetosApresentados": 40,
+      "projetosApresentados": 44,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -585,7 +585,7 @@
         "11": 1059.21,
         "12": 0.0
       },
-      "projetosApresentados": 60,
+      "projetosApresentados": 64,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -725,7 +725,7 @@
         "11": 0.0,
         "12": 0.0
       },
-      "projetosApresentados": 96,
+      "projetosApresentados": 100,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -1005,7 +1005,7 @@
         "11": 331.63,
         "12": 0.0
       },
-      "projetosApresentados": 101,
+      "projetosApresentados": 105,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -1061,7 +1061,7 @@
         "11": 0.0,
         "12": 0.0
       },
-      "projetosApresentados": 110,
+      "projetosApresentados": 114,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -1225,7 +1225,7 @@
         "7": 39245.54,
         "8": 18764.53,
         "9": 13625.99,
-        "10": 21582.34,
+        "10": 22290.32,
         "11": 1378.38,
         "12": 0.0
       },
@@ -1247,17 +1247,17 @@
         "1": 40615.39,
         "2": 55121.64,
         "3": 62579.51,
-        "4": 25879.85,
-        "5": 0.0,
-        "6": 38241.72,
-        "7": 51599.68,
+        "4": 38426.2,
+        "5": 57189.97,
+        "6": 31553.87,
+        "7": 42240.57,
         "8": 18945.58,
         "9": 7726.61,
         "10": 7210.87,
         "11": 250.0,
         "12": 0.0
       },
-      "projetosApresentados": 108,
+      "projetosApresentados": 112,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     },
@@ -1285,7 +1285,7 @@
         "11": 200.0,
         "12": 0.0
       },
-      "projetosApresentados": 104,
+      "projetosApresentados": 108,
       "presencaPlenario": "N/D",
       "assessores": "N/D"
     }
